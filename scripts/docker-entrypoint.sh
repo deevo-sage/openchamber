@@ -1,7 +1,8 @@
 #!/usr/bin/env sh
 set -eu
 
-HOME="/home/openchamber"
+HOME="${HOME:-/home/openchamber}"
+export HOME
 
 OPENCODE_CONFIG_DIR="${OPENCODE_CONFIG_DIR:-${HOME}/.config/opencode}"
 export OPENCODE_CONFIG_DIR
@@ -10,7 +11,9 @@ SSH_DIR="${HOME}/.ssh"
 SSH_PRIVATE_KEY_PATH="${SSH_DIR}/id_ed25519"
 SSH_PUBLIC_KEY_PATH="${SSH_PRIVATE_KEY_PATH}.pub"
 
-mkdir -p "${SSH_DIR}"
+if ! mkdir -p "${SSH_DIR}" 2>/dev/null; then
+  echo "[entrypoint] warning: cannot create ${SSH_DIR}, continuing without SSH setup" >&2
+fi
 if ! chmod 700 "${SSH_DIR}" 2>/dev/null; then
   echo "[entrypoint] warning: cannot chmod ${SSH_DIR}, continuing with existing permissions"
 fi

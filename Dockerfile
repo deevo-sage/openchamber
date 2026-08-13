@@ -42,6 +42,7 @@ RUN userdel bun \
 # Switch to openchamber user
 USER openchamber
 
+ENV HOME=/home/openchamber
 ENV NPM_CONFIG_PREFIX=/home/openchamber/.npm-global
 ENV PATH=${NPM_CONFIG_PREFIX}/bin:${PATH}
 
